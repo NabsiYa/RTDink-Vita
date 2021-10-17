@@ -191,7 +191,7 @@ bool App::Init()
 	int scaleToX = 1024;
 	int scaleToY = 768;
 
-	SetLockedLandscape(false); //we don't allow portrait mode for this game
+	SetLockedLandscape(true);
 	SetupScreenInfo(GetPrimaryGLX(), GetPrimaryGLY(), ORIENTATION_PORTRAIT);
 	if (bScaleScreenActive)
 		SetupFakePrimaryScreenSize(scaleToX,scaleToY);

@@ -483,7 +483,7 @@ string GetFileLocationString(const string fName)
 		}
 	}
 
-	if (GetEmulatedPlatformID() == PLATFORM_ID_IOS || GetEmulatedPlatformID() == PLATFORM_ID_OSX || GetEmulatedPlatformID() == PLATFORM_ID_HTML5)
+	if (GetEmulatedPlatformID() == PLATFORM_ID_IOS || GetEmulatedPlatformID() == PLATFORM_ID_OSX || GetEmulatedPlatformID() == PLATFORM_ID_HTML5 || GetEmulatedPlatformID() == PLATFORM_ID_PSVITA /* this is test i want to see what happens! */)
 	{
 		//actually, we need to do this to grab stuff from the .pak we added
 		if (FileExists(g_dglo.m_gameDir+fName))
@@ -5085,44 +5085,7 @@ bool PlayMidi(const char *sFileName)
 
 	if (GetFileExtension(fName) == "mid")
 	{
-		bool bTryUsingOgg = true;
-
-		if (!g_dglo.m_dmodGameDir.empty() && FileExists(g_dglo.m_dmodGamePathWithDir+fName))
-		{
-			//actually, don't replace with ogg, they probably have their own midi stuff here
-			bTryUsingOgg = false;
-		}
-		
-
-		string tempName = fName;
-		
-		{
-			tempName = ModifyFileExtension(fName, "ogg");
-		}
-		
-		if (bTryUsingOgg && !g_dglo.m_dmodGameDir.empty() && FileExists(g_dglo.m_dmodGamePathWithDir+tempName))
-		{
-
-			//found it
-			fName =  tempName;
-
-		} else
-		if (!g_dglo.m_dmodGameDir.empty() && FileExists(g_dglo.m_dmodGamePathWithDir+fName))
-		{
-			
-				//found it, no changed needed
-				
-			
-		} else
-		{
-			//try the base dir for oggs too, but not if it's a dmod
-			if (g_dglo.m_dmodGameDir.empty() && FileExists(g_dglo.m_gamePathWithDir+tempName))
-			{
-				//found it
-				fName =  tempName;
-			}
-		}
-
+		return false; //im sorry but midi is not supported.
 	}
 
 	string finalPath = GetFileLocationString(fName);
@@ -8049,7 +8012,7 @@ pass:
 			WriteLastPathSaved("");
 
 			//kill our state.dat if it existed, not needed now, this can exist if an iphone goes into suspend, but then is resumed
-			RemoveFile(GetSavePath()+"state.dat", false);
+			//RemoveFile(GetSavePath() + "state.dat", false);
 
 			DinkQuitGame();
 			//SyncPersistentData();

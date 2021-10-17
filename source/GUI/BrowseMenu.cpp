@@ -116,7 +116,7 @@ void BrowseMenuOnSelect(VariantList *pVList) //0=vec2 point of click, 1=entity s
 		DisableAllButtonsEntity(pMenu);
 		SlideScreen(pMenu, false);
 		GetMessageManager()->CallEntityFunction(pMenu, 500, "OnDelete", NULL);
-		DMODInstallMenuCreate(pEntClicked->GetParent()->GetParent()->GetParent()->GetParent()->GetParent(), dmodurl, GetDMODRootPath() , "", true, dmodName);
+		DMODInstallMenuCreate(pEntClicked->GetParent()->GetParent()->GetParent()->GetParent()->GetParent(), dmodurl, GetDMODStaticRootPath() , "", true, dmodName);
 
 	}
 

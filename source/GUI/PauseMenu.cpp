@@ -196,7 +196,7 @@ void PauseMenuOnSelect(VariantList *pVList) //0=vec2 point of click, 1=entity se
 		SaveState(g_dglo.m_savePath+"continue_state.dat", false);
 		WriteLastPathSaved("");
 		//kill our state.dat if it existed, not needed now, this can exist if an iphone goes into suspend, but then is resumed
-		RemoveFile(GetSavePath()+"state.dat", false);
+		//RemoveFile(GetSavePath()+"state.dat", false);
 		//SlideScreen(pEntClicked->GetParent()->GetParent(), false);			
 		DinkQuitGame();
 		//SyncPersistentData();

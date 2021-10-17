@@ -233,7 +233,7 @@ void OnDMODUnpackFinish(VariantList *pVList)
 	DMODInstallSetProgressBar(1);
 	DMODInstallShowMsg(pMenu, pMenu->GetVar("originalFileName")->GetString() + " installed.", true);
 
-	//RemoveFile(GetDMODRootPath()+"temp.dmod");
+	//RemoveFile(GetDMODStaticRootPath()  +"temp.dmod");
 	//RemoveFile("temp.dmod");
 
 	/*
@@ -339,7 +339,7 @@ Entity * DMODInstallMenuCreate(Entity *pParentEnt, string dmodURL, string instal
 	pBG->GetVar("dmodURL")->Set(dmodURL);
 	pBG->GetVar("dmodName")->Set(dmodName);
 	pBG->GetVar("installDirectory")->Set(installDirectory);
-	pBG->GetVar("tempFileName")->Set(GetDMODRootPath()+"temp.dmod");
+	pBG->GetVar("tempFileName")->Set(GetDMODStaticRootPath() + "temp.dmod");
 	pBG->GetVar("originalFileName")->Set(GetFileNameFromString(dmodURL));
 	pBG->GetVar("fromBrowseMenu")->Set(uint32(bFromBrowseMenu));
 	pBG->GetVar("deleteOnFinish")->Set(uint32(bDeleteOnFinish));

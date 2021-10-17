@@ -413,23 +413,7 @@ void DMODMenuAddScrollContent(Entity *pParent)
 	float y = 0;
 
 	//Entity *pEnt;
-	
-	vector<string> temp = GetDirectoriesAtPath(GetDMODRootPath());
 	vector<DMODDisplayEntry> entries;
-
-	//actually, you know what?  Let's add the path to each one
-	for (int i=0; i < temp.size(); i++)
-	{
-
-		temp[i] = GetDMODRootPath() + temp[i];
-		if (FileExists(temp[i]+"/dink.dat"))
-		{
-			//looks valid
-			DMODDisplayEntry entry;
-			entry.m_files = temp[i];
-			entries.push_back(entry);
-		}
-	}
 
 	if (!GetDMODStaticRootPath().empty())
 	{
