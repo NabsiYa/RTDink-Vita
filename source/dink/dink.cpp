@@ -5096,14 +5096,6 @@ bool PlayMidi(const char *sFileName)
 
 		string tempName = fName;
 		
-		/*
-		if (GetEmulatedPlatformID() == PLATFORM_ID_HTML5)
-		{
-			//ios browsers don't support ogg?!  Fine, let's assume we have MP3 versions
-			tempName = ModifyFileExtension(fName, "mp3");
-		}
-		else
-		*/
 		{
 			tempName = ModifyFileExtension(fName, "ogg");
 		}
@@ -5173,7 +5165,7 @@ void check_midi(void)
 		{
 			//kill music
 			LogMsg("Stopped cd");
-			//StopMidi();
+			StopMidi();
 
 		}
 
@@ -5181,13 +5173,13 @@ void check_midi(void)
 		{
 				sprintf(hold, "%d.mid",g_MapInfo.music[*pmap]-1000);
 				
-				//PlayMidi(hold);
+				PlayMidi(hold);
 		} else
 		{
 			//there is music associated with this screen
 			sprintf(hold, "%d.mid",g_MapInfo.music[*pmap]);
 			
-			//PlayMidi(hold);
+			PlayMidi(hold);
 		}
 		
 	}
@@ -16813,13 +16805,7 @@ void SetDefaultVars(bool bFullClear)
 //in some cases, we include DMOD's with the app, but they are static and can't be changed
 string GetDMODStaticRootPath()
 {
-	if (GetPlatformID() == PLATFORM_ID_IOS)
-	{
-		return GetBaseAppPath()+"dmods/";
-	} 
-
-	return ""; //unused
-
+	return GetBaseAppPath() + "dmods/";
 }
 
 void ClearCommandLineParms()
@@ -16834,116 +16820,8 @@ string GetDMODRootPath(string *pDMODNameOutOrNull)
 	{
 		*pDMODNameOutOrNull = "";
 	}
-	
 
-#if defined(WIN32)
-	
-	string dmodpath = "dmods/";
-	string refdir = "";
-
-	vector<string> parms = GetBaseApp()->GetCommandLineParms();
-	
-	for (int i = 0; i < parms.size(); i++)
-	{
-		if (parms[i] == "--refdir" || parms[i] == "-dmodpath")
-		{
-			if (parms.size() > i + 1)
-			{
-				refdir = parms[i + 1]; i++;
-
-				if (refdir[0] == '\"')
-				{
-					//special handling for quotes
-				
-					refdir = ""; //try again
-
-					for (; i < parms.size(); i++)
-					{
-						if (!refdir.empty())
-						{
-							refdir += " ";
-						}
-						refdir += parms[i];
-					}
-
-					//pull just the part we want out
-					refdir = SeparateStringSTL(refdir, 1, '\"');
-
-				}
-
-				StringReplace("\\", "/", refdir);
-				if (refdir[refdir.size() - 1] != '/') refdir += '/'; //need a trailing slash
-
-				//remove "
-				StringReplace("\"", "", refdir);
-			}
-			else
-			{
-				LogMsg("--refdir used wrong");
-			}
-		}
-	}
-		for (int i = 0; i < parms.size(); i++)
-		{
-		if (parms[i] == "-game")
-		{
-			if (parms.size() > i + 1)
-			{
-				dmodpath = parms[i + 1]; i++;
-
-				if (!refdir.empty())
-				{
-					if (dmodpath.find(":") != string::npos)
-					{
-						//the dmod dir we got already has a path. Ignore --refdir, it will just break things
-					}
-					else
-					{
-						//prepend the refdir path so it works with how dfarc does it
-						dmodpath = refdir + dmodpath;
-					}
-				}
-				StringReplace("\\", "/", dmodpath);
-				if (dmodpath[dmodpath.size() - 1] != '/') dmodpath += '/'; //need a trailing slash
-
-				int len = dmodpath.find_last_of("/", dmodpath.length() - 2);
-				if (len == string::npos)
-				{
-					//no demod dir?  Weird but ok
-					if (pDMODNameOutOrNull)
-						*pDMODNameOutOrNull = dmodpath;
-					dmodpath = "";
-				}
-				else
-				{
-					if (pDMODNameOutOrNull)
-						*pDMODNameOutOrNull = dmodpath.substr(len + 1, dmodpath.length());
-					dmodpath = dmodpath.substr(0, len + 1);
-				}
-			}
-			else
-			{
-				LogMsg("-game used wrong");
-			}
-		}
-
-	}
-	
-	return dmodpath;
-#endif
-
-	if (GetPlatformID() == PLATFORM_ID_WEBOS)
-	{
-		return "dmods/";
-	}
-
-	if(GetPlatformID() == PLATFORM_ID_PSVITA)
-	{
-		//LogMsg("saving in PSVita");
-		return GetBaseAppPath() + "dmods/";
-	}
-
-	return GetAppCachePath();
+	return "dmods/";
 }
 
 void InitDinkPaths(string gamePath, string gameDir, string dmodGameDir)

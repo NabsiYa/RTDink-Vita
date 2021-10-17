@@ -421,7 +421,7 @@ void DMODMenuAddScrollContent(Entity *pParent)
 	for (int i=0; i < temp.size(); i++)
 	{
 
-		temp[i] = GetDMODRootPath()+temp[i];
+		temp[i] = GetDMODRootPath() + temp[i];
 		if (FileExists(temp[i]+"/dink.dat"))
 		{
 			//looks valid
